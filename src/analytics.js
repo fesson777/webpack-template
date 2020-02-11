@@ -8,7 +8,7 @@ function createAnalytic () {
 
     return {
         destroy () {
-            document.removeEventListener('click', listener)
+            document.addEventListener('click', listener)
             destroy = true
         },
         getClick () {
