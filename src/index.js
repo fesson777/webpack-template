@@ -7,6 +7,7 @@ import WebpackLogo from '@/webpack-logo.png'
 import csv from '@/data.csv'
 import  './styles/less.less'
 import './styles/scss.scss'
+import './babel.js'
 
 const post = new Post('Webpack title', WebpackLogo)
 

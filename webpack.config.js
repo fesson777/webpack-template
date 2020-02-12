@@ -11,34 +11,52 @@ const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
 
 const optimization = () => {
-   const config = {
-        splitChunks: {
-            chunks: 'all'
+        const config = {
+                splitChunks: {
+                    chunks: 'all'
+                    }
             }
-     }
 
-     if(isProd) {
-         config.minimizer = [
-             new OptimizeCssAssetPlugin(),
-             new TerserWebpackPlugin()
-         ]
-     }
+        if(isProd) {
+            config.minimizer = [
+                new OptimizeCssAssetPlugin(),
+                new TerserWebpackPlugin()
+            ]
+        }
 
     return config
 }   
 
 const filename = ext => isDev ? `[name].${ext}` : `[name].[hash].${ext}` 
         
-    
+    const cssLoaders =(extra) => {
+        const loaders = [
+                            {
+                                loader: MiniCssExtractPlugin.loader,
+                                options: {
+                                    hmr: isDev,
+                                    reloadAll: true
+                                }
+                            },
+                            'css-loader'
+                            
+                        ]
+        if(extra) {
+            loaders.push(extra)
+        }                 
 
+        return loaders
+    }
 
 console.log("isDev: ", isDev)
+
+
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {
-        main: "./index.js",
+        main: ['@babel/polyfill', './index.js'],
         analytics: './analytics.js'
     },
     output : {
@@ -78,14 +96,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: [ {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: isDev,
-                            reloadAll: true
-                        }
-                        },
-                 'css-loader']
+                use: cssLoaders()
             },
             {
                 test: /\.(png||jpg||svg||gif)$/,
@@ -105,28 +116,24 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                use: [ {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {
-                                hmr: isDev,
-                                reloadAll: true
-                        }
-                        },
-                        'css-loader',
-                        'less-loader']
+                use: cssLoaders('less-loader')
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [ {
-                            loader: MiniCssExtractPlugin.loader,
-                            options: {
-                                hmr: isDev,
-                                reloadAll: true
-                        }
-                        },
-                        'css-loader',
-                        'sass-loader']
-            }
+                use: cssLoaders('sass-loader')
+            },
+            { 
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            '@babel/preset-env'
+                        ]
+                    }
+                }
+            }                          
         ]
     }
 
