@@ -5,6 +5,8 @@ import xml from '@/data.xml'
 import './styles/styles.css'
 import WebpackLogo from '@/webpack-logo.png'
 import csv from '@/data.csv'
+import  './styles/less.less'
+import './styles/scss.scss'
 
 const post = new Post('Webpack title', WebpackLogo)
 
