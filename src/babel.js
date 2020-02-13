@@ -12,3 +12,8 @@ class Util {
 
 console.log('Util.is: ', Util.id)
 console.log(unused)
+
+//Динамические импорты
+// import ('lodash').then(_ => {
+//     console.log('Lodash: ', _.random(0, 42 , true))
+// })
