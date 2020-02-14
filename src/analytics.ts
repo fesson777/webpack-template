@@ -1,23 +1,23 @@
-function createAnalytic (): object {
-    let counter = 0
-    let destroy: boolean = false
+function createAnalytic(): object {
+  let counter = 0;
+  let destroyed: boolean = false;
 
-    const listener = (): number => counter++
+  const listener = (): number => counter++;
 
-    document.addEventListener('click', listener)
+  document.addEventListener('click', listener);
 
-    return {
-        destroy () {
-            document.addEventListener('click', listener)
-            destroy = true
-        },
-        getClick () {
-            if (destroy) {
-                return `Analytic is destroy, total clicks = ${counter}`
-            }
-            return counter
-        }
-    }
+  return {
+    destroy(): void {
+      document.removeEventListener('click', listener);
+      destroyed = true;
+    },
+    getClick(): string | number {
+      if (destroyed) {
+        return `Analytic is destroyed, total clicks = ${counter}`;
+      }
+      return counter;
+    },
+  };
 }
 
-window['analytic'] = createAnalytic()
+window['analytic'] = createAnalytic();

@@ -1,15 +1,23 @@
-
 $border: 2px solid #ccc;
 
-
 .card {
-    padding: 1rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    border: $border;
-}
-
-.card h2 {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  border: $border;
+  h2 {
     text-align: center;
     color: darkmagenta;
+  }
+}
+
+.assets {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  border: $border;
+  h2 {
+    text-align: center;
+    color: forestgreen;
+  }
 }
